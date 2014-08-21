@@ -2,9 +2,8 @@ require 'spec_helper'
 
 describe Losting do
   it 'returns an event date formatted to long ordinal format' do
-    losting = FactoryGirl.create(:losting)
-    losting_date = losting.event_date
-    expect(losting.long_date).to eq(losting_date.to_formatted_s(:long_ordinal))
+    losting = FactoryGirl.create(:losting, :event_date => Time.new(2014, 8, 12, 2, 2, 0, "+00:00"))
+    expect(losting.long_date).to eq("August 12th, 2014 02:02")
   end
 
   it 'returns a maximum of 10 event dates upon call to ordered_json' do
