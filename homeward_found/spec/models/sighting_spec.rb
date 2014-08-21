@@ -10,4 +10,11 @@ describe Sighting do
     15.times { FactoryGirl.create(:sighting) }
     expect(JSON.parse(Sighting.ordered_json).length).to eq(10)
   end
+
+  it 'returns the most recent sighting first' do
+    14.times { FactoryGirl.create(:sighting) }
+    FactoryGirl.create(:sighting, :event_date => Time.new(2050, 8, 22, 9, 9, 0, "+00:00"))
+    first_sighting = JSON.parse(Sighting.ordered_json)[0]
+    expect(first_sighting["long_date"]).to eq("August 22nd, 2050 09:09")
+  end
 end
